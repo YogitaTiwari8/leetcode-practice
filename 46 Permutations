@@ -1,0 +1,42 @@
+/*
+ * LeetCode: 46
+ * Problem name: Permutations
+ * Link: https://leetcode.com/problems/permutations/
+ * Approach:
+ * We generate all permutations of the given array using recursion + backtracking.
+ * 
+ * - At each recursive call, we build a `small` list that contains one possible permutation.
+ * - We only add a number if it’s not already in the current `small` list (to avoid repetition).
+ * - When the `small` list size == nums.length, it means one complete permutation is formed.
+ * - After recursive call, we backtrack (remove last added element) and try other options.
+ */
+
+Solution
+--
+class Solution {
+    public List<List<Integer>> permute(int[] nums) {
+        List<Integer> small = new ArrayList<>();       // to build one permutation at a time
+        List<List<Integer>> big = new ArrayList<>();   // to store all permutations
+        helper(nums, small, big);
+        return big;
+    }
+
+    // Recursive Backtracking Helper
+    public void helper(int[] nums, List<Integer> small, List<List<Integer>> big) {
+        // Base Case: If one permutation is ready
+        if (nums.length == small.size()) {
+            big.add(new ArrayList<>(small));   // Add copy of current permutation
+            return;
+        }
+
+        // Try every number in nums that is not already in current permutation
+        for (int i = 0; i < nums.length; i++) {
+            if (!small.contains(nums[i])) {
+                small.add(nums[i]);                    // Choose
+                helper(nums, small, big);              // Explore
+                small.remove(small.size() - 1);        // Un-choose (Backtrack)
+            }
+        }
+    }
+}
+--
