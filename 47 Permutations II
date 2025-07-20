@@ -1,0 +1,38 @@
+/*
+ * LeetCode: 47
+ * Problem name: Permutations II
+ * Link: https://leetcode.com/problems/permutations-ii/
+ *
+ * Approach:
+ * - Use backtracking to explore all possible permutations.
+ * - Use a boolean array 'visit' to keep track of elements already included in the current path.
+ * - To avoid duplicate permutations, check if the current list is already in the result list using '!big.contains(small)'.
+ *   (This is not optimal for large inputs; a more efficient way is to sort the array and skip duplicates during iteration.)
+ * - Base case: if current permutation (small) has all elements, add it to the result (big).
+ */
+
+class Solution {
+    public List<List<Integer>> permuteUnique(int[] nums) {
+        List<Integer> small = new ArrayList<>();         // Stores current permutation
+        List<List<Integer>> big = new ArrayList<>();     // Stores all unique permutations
+        boolean[] visit = new boolean[nums.length];      // Tracks visited elements
+        helper(nums, small, big, visit);
+        return big;
+    }
+
+    public void helper(int[] nums, List<Integer> small, List<List<Integer>> big, boolean[] visit) {
+        if (small.size() == nums.length && !big.contains(small)) {
+            big.add(new ArrayList<>(small)); // Add a deep copy of current permutation
+            return;
+        }
+        for (int i = 0; i < nums.length; i++) {
+            if (!visit[i]) {
+                small.add(nums[i]);       // Choose
+                visit[i] = true;
+                helper(nums, small, big, visit); // Explore
+                small.remove(small.size() - 1);  // Unchoose (Backtrack)
+                visit[i] = false;
+            }
+        }
+    }
+}
