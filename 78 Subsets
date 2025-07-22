@@ -1,0 +1,33 @@
+/*
+ * LeetCode: 78
+ * Problem name: Subsets
+ * Link: https://leetcode.com/problems/subsets/
+ *
+ * Approach:
+ * - Use backtracking to explore all subset combinations.
+ * - At each index, decide whether to include the current element.
+ * - Start from index 0 and recursively build subsets by including or excluding elements.
+ * - Add a copy of the current subset (`small`) at each step to the final result (`big`).
+ */
+
+Solution
+--
+class Solution {
+    public List<List<Integer>> subsets(int[] nums) {
+        List<List<Integer>> big = new ArrayList<>(); // To store all subsets
+        helper(nums, 0, new ArrayList<Integer>(), big); // Start backtracking from index 0
+        return big;
+    }
+
+    // Recursive helper to generate subsets
+    public void helper(int[] nums, int index, List<Integer> small, List<List<Integer>> big) {
+        big.add(new ArrayList<Integer>(small)); // Add the current subset to the result
+
+        for (int i = index; i < nums.length; i++) {
+            small.add(nums[i]); // Choose the element
+            helper(nums, i + 1, small, big); // Explore further
+            small.remove(small.size() - 1); // Backtrack
+        }
+    }
+}
+--
