@@ -1,0 +1,37 @@
+/*
+ * LeetCode: 90
+ * Problem name: Subsets II
+ * Link: https://leetcode.com/problems/subsets-ii/
+ *
+ * Approach:
+ * - Sort the input array to handle duplicates.
+ * - Use backtracking to generate all subsets.
+ * - Before adding a subset to the result, check if it's already present to avoid duplicates.
+ * - At each recursive call, iterate through the elements from the current index onward.
+ * - Backtrack after each inclusion to explore other possibilities.
+ */
+
+Solution
+--
+class Solution {
+    public List<List<Integer>> subsetsWithDup(int[] nums) {
+        List<List<Integer>> big = new ArrayList<>();
+        Arrays.sort(nums); // Sort to bring duplicates together
+        helper(nums, 0, new ArrayList<Integer>(), big);
+        return big;
+    }
+
+    // Recursive backtracking function to build subsets
+    public void helper(int[] nums, int index, List<Integer> small, List<List<Integer>> big) {
+        if (!big.contains(small)) {
+            big.add(new ArrayList<Integer>(small)); // Add only unique subsets
+        }
+
+        for (int i = index; i < nums.length; i++) {
+            small.add(nums[i]);         // Choose element at index i
+            helper(nums, i + 1, small, big); // Recurse with next index
+            small.remove(small.size() - 1);  // Backtrack
+        }
+    }
+}
+--
