@@ -1,0 +1,39 @@
+/*
+ * LeetCode: 39
+ * Problem Name: Combination Sum
+ * Link: https://leetcode.com/problems/combination-sum/
+ * 
+ * Approach:
+ * - Use backtracking to explore all combinations that sum to the target.
+ * - At each step, try including the current number (can be reused, so don't move the index forward).
+ * - Only proceed if the candidate is ≤ target.
+ * - If target becomes 0, add the current combination to the result.
+ * - Backtrack by removing the last added element and trying the next one.
+ */
+
+Solution 
+--
+class Solution {
+    public List<List<Integer>> combinationSum(int[] candidates, int target) {
+        List<List<Integer>> big = new ArrayList<>();
+        helper(candidates, 0, new ArrayList<Integer>(), big, target);
+        return big;
+    }
+
+    // Recursive backtracking helper
+    public void helper(int[] candidates, int index, List<Integer> small, List<List<Integer>> big, int target) {
+        if (target == 0) {
+            big.add(new ArrayList<>(small)); // Found a valid combination
+            return;
+        }
+
+        for (int i = index; i < candidates.length; i++) {
+            if (candidates[i] <= target) {
+                small.add(candidates[i]); // Choose current number
+                helper(candidates, i, small, big, target - candidates[i]); // Reuse allowed, so pass i again
+                small.remove(small.size() - 1); // Backtrack
+            }
+        }
+    }
+}
+--
