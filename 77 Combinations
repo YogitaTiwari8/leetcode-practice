@@ -1,0 +1,37 @@
+/*
+ * LeetCode: 77
+ * Problem Name: Combinations
+ * Link: https://leetcode.com/problems/combinations/
+ * 
+ * Approach:
+ * - Use backtracking to generate all combinations of size `k` from numbers 1 to `n`.
+ * - Start from `index = 1` and increment in each recursive call to avoid duplicates.
+ * - Add elements to the current list (`small`), and recurse.
+ * - When the size of `small` becomes `k`, add a copy of it to the result list (`big`).
+ * - Backtrack by removing the last added element and continue exploring.
+ */
+
+Solution 
+--
+class Solution {
+    public List<List<Integer>> combine(int n, int k) {
+        List<List<Integer>> big = new ArrayList<>();
+        helper(n, k, 1, new ArrayList<Integer>(), big); // Start from 1
+        return big;
+    }
+
+    // Recursive backtracking function
+    public void helper(int n, int k, int index, List<Integer> small, List<List<Integer>> big) {
+        if (small.size() == k) {
+            big.add(new ArrayList<>(small)); // Add combination of size k
+            return;
+        }
+
+        for (int i = index; i <= n; i++) {
+            small.add(i);                 // Choose i
+            helper(n, k, i + 1, small, big); // Move to next number
+            small.remove(small.size() - 1); // Backtrack
+        }
+    }
+}
+--
