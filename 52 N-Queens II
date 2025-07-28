@@ -1,0 +1,75 @@
+/*
+ * LeetCode: 52
+ * Problem Name: N-Queens II
+ * Link: https://leetcode.com/problems/n-queens-ii/
+ * 
+ * Approach:
+ * - Use a 2D boolean array to represent the chessboard.
+ * - Use recursion and backtracking to try placing queens row by row.
+ * - At each step, check if placing a queen at (row, col) is safe:
+ *    → No queen should be in the same column.
+ *    → No queen on the left-upper diagonal.
+ *    → No queen on the right-upper diagonal.
+ * - If it's safe, place the queen and move to the next row.
+ * - If a complete board is formed (row == n), count it as one valid solution.
+ * - Backtrack after trying each position to explore all possibilities.
+ */
+
+Solution
+--
+class Solution {
+    boolean[][] board;
+
+    public int totalNQueens(int n) {
+        board = new boolean[n][n]; // Initialize n x n chessboard
+        return helper(0, n);       // Start placing queens from row 0
+    }
+
+    // Helper method to check if a queen can be placed at (row, col)
+    public boolean canplaceQueen(int row, int col) {
+        // Check column above
+        for (int i = row; i >= 0; i--) {
+            if (board[i][col]) {
+                return false;
+            }
+        }
+
+        // Check left-upper diagonal
+        for (int i = row, j = col; i >= 0 && j >= 0; i--, j--) {
+            if (board[i][j]) {
+                return false;
+            }
+        }
+
+        // Check right-upper diagonal
+        for (int i = row, j = col; i >= 0 && j < board[0].length; i--, j++) {
+            if (board[i][j]) {
+                return false;
+            }
+        }
+
+        return true; // Safe to place queen
+    }
+
+    // Recursive backtracking function to place queens row-wise
+    public int helper(int row, int n) {
+        // All queens placed successfully
+        if (row == n) {
+            return 1;
+        }
+
+        int count = 0;
+
+        // Try placing queen in each column of the current row
+        for (int col = 0; col < n; col++) {
+            if (canplaceQueen(row, col)) {
+                board[row][col] = true;        // Place queen
+                count += helper(row + 1, n);   // Recur for next row
+                board[row][col] = false;       // Backtrack
+            }
+        }
+
+        return count; // Total valid arrangements from this state
+    }
+}
+--
