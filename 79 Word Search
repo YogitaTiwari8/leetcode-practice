@@ -1,0 +1,67 @@
+/*
+ * LeetCode: 79
+ * Problem Name: Word Search
+ * Link: https://leetcode.com/problems/word-search/
+ * 
+ * Approach:
+ * - For each cell in the board, we try to find the given word starting from that cell.
+ * - Use DFS (Depth-First Search) with backtracking to explore all 4 directions (up, down, left, right).
+ * - If a character matches, mark the cell as visited (temporarily) and recursively search the rest of the word.
+ * - Backtrack after each DFS call to restore the board cell.
+ * - Use a direction array to simplify moving in 4 directions.
+ */
+
+Solution
+--
+class Solution {
+
+    public boolean exist(char[][] board, String word) {
+        // Try to find the word starting from every cell
+        for (int i = 0; i < board.length; i++) {
+            for (int j = 0; j < board[0].length; j++) {
+                if (isFound(board, word, i, j)) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    // 4 possible directions: down, right, up, left
+    int[][] directions = { {1, 0}, {0, 1}, {-1, 0}, {0, -1} };
+
+    // Recursive DFS function to search for the word from (row, col)
+    boolean isFound(char[][] board, String word, int row, int col) {
+        // Base case: all characters matched
+        if (word.length() == 0) {
+            return true;
+        }
+
+        // Boundary checks and character match check
+        if (row < 0 || col < 0 || row >= board.length || col >= board[0].length || board[row][col] != word.charAt(0)) {
+            return false;
+        }
+
+        // Mark current cell as visited
+        board[row][col] = '#';
+
+        boolean isMatch = false;
+
+        // Try all 4 directions
+        for (int[] direction : directions) {
+            int nextRow = row + direction[0];
+            int nextCol = col + direction[1];
+
+            if (isFound(board, word.substring(1), nextRow, nextCol)) {
+                isMatch = true;
+                break; // No need to check further
+            }
+        }
+
+        // Backtrack and restore the original character
+        board[row][col] = word.charAt(0);
+
+        return isMatch;
+    }
+}
+--
