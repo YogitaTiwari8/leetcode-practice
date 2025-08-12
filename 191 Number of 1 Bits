@@ -1,0 +1,23 @@
+// LeetCode: 191
+// Problem name: Number of 1 Bits
+// https://leetcode.com/problems/number-of-1-bits/
+// Category: Bit Manipulation
+// Approach:
+// - Convert the given number `n` to its binary string representation.
+// - Iterate through the binary string and count the number of '1' characters.
+// - Return the count as the Hamming weight of the number.
+
+Solution
+--
+class Solution {
+    public int hammingWeight(int n) {
+        String bin = Integer.toBinaryString(n); // Convert to binary string
+        int count = 0;
+        for (int i = 0; i < bin.length(); i++) {
+            if (bin.charAt(i) == '1') {
+                count++;
+            }
+        }
+        return count;
+    }
+}
