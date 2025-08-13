@@ -3,15 +3,31 @@
 // https://leetcode.com/problems/number-of-1-bits/
 // Category: Bit Manipulation
 // Approach:
-// - Convert the given number `n` to its binary string representation.
-// - Iterate through the binary string and count the number of '1' characters.
-// - Return the count as the Hamming weight of the number.
+// - **Approach 1 (Built-in)**: Use `Integer.bitCount(n)` to directly get the number of set bits.
+// - **Approach 2 (Brian Kernighan's Algorithm)**: Repeatedly turn off the rightmost set bit using `n & (n - 1)` and count iterations.
+// - **Approach 3 (String Method)**: Convert to binary string and count occurrences of '1'.
 
 Solution
 --
 class Solution {
+    // Approach 1: Built-in method
     public int hammingWeight(int n) {
-        String bin = Integer.toBinaryString(n); // Convert to binary string
+        return Integer.bitCount(n);
+    }
+
+    // Approach 2: Brian Kernighan's Algorithm
+    public int hammingWeightAlgo(int n) {
+        int count = 0;
+        while (n > 0) {
+            n = n & (n - 1); // Remove rightmost set bit
+            count++;
+        }
+        return count;
+    }
+
+    // Approach 3: Convert to binary string and count '1's
+    public int hammingWeightApproch1(int n) {
+        String bin = Integer.toBinaryString(n);
         int count = 0;
         for (int i = 0; i < bin.length(); i++) {
             if (bin.charAt(i) == '1') {
@@ -21,3 +37,4 @@ class Solution {
         return count;
     }
 }
+--
