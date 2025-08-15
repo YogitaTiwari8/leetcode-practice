@@ -1,0 +1,26 @@
+// LeetCode: 190
+// Problem name: Reverse Bits
+// https://leetcode.com/problems/reverse-bits/
+// Category: Bit Manipulation
+// Approach:
+// - Initialize `result` to 0.
+// - Loop 32 times (for each bit in the integer):
+//   - Extract the last bit of `n` using `n & 1`.
+//   - Shift `result` left by 1 and OR it with the extracted bit to append it.
+//   - Unsigned right shift `n` by 1 to process the next bit.
+// - Return the final `result`.
+
+Solution
+--
+class Solution {
+    public int reverseBits(int n) {
+        int result = 0;
+        for (int i = 0; i < 32; i++) {
+            int last = n & 1;               // Get last bit
+            result = (result << 1) | last;  // Append bit to result
+            n = n >>> 1;                    // Unsigned right shift
+        }
+        return result;
+    }
+}
+--
