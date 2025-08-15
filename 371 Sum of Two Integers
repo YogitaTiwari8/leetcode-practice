@@ -1,0 +1,47 @@
+// LeetCode: 371
+// Problem name: Sum of Two Integers
+// https://leetcode.com/problems/sum-of-two-integers/
+// Category: Bit Manipulation
+// Approach:
+// - Use bitwise operations to add two integers without using '+' or '-'.
+// - XOR (`a ^ b`) gives the sum without carry.
+// - AND (`a & b`) followed by left shift gives the carry.
+// - Repeat the process until there is no carry left.
+// - Return `a` as the final sum.
+
+Solution
+--
+class Solution {
+    public int getSum(int a, int b) {
+        while (b != 0) {
+            int carry = (a & b) << 1; // Calculate carry
+            a = a ^ b;                // Sum without carry
+            b = carry;                // Carry for next iteration
+        }
+        return a;
+    }
+}
+// LeetCode: 371
+// Problem name: Sum of Two Integers
+// https://leetcode.com/problems/sum-of-two-integers/
+// Category: Bit Manipulation
+// Approach:
+// - Use bitwise operations to add two integers without using '+' or '-'.
+// - XOR (`a ^ b`) gives the sum without carry.
+// - AND (`a & b`) followed by left shift gives the carry.
+// - Repeat the process until there is no carry left.
+// - Return `a` as the final sum.
+
+Solution
+--
+class Solution {
+    public int getSum(int a, int b) {
+        while (b != 0) {
+            int carry = (a & b) << 1; // Calculate carry
+            a = a ^ b;                // Sum without carry
+            b = carry;                // Carry for next iteration
+        }
+        return a;
+    }
+}
+--
